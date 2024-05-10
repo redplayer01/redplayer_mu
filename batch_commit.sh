@@ -3,12 +3,7 @@
 # 设置变量
 batch_size=20
 commit_message="Batch commit"
-
-# 检查是否有参数传递
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <directory>"
-    exit 1
-fi
+source_directory="src/source"
 
 git add index.html batch_commit.sh .gitignore src/list.txt
 
@@ -25,12 +20,12 @@ git add index.html
 
 # 遍历目录下的文件
 file_count=0
-for file in "$1"/*; do
+for file in "$source_directory"/*; do
     if [ -f "$file" ]; then
         echo "Adding $file to commit..."
-        git add $file
+        git add "$file"
         ((file_count++))
-        if [ $file_count -eq $batch_size ]; then
+        if [ "$file_count" -eq "$batch_size" ]; then
             commit_files
             file_count=0
         fi
@@ -38,7 +33,7 @@ for file in "$1"/*; do
 done
 
 # 提交最后一批文件
-if [ $file_count -gt 0 ]; then
+if [ "$file_count" -gt 0 ]; then
     commit_files
 fi
 
