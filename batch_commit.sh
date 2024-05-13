@@ -13,7 +13,7 @@ cd "$(dirname "$0")" || exit
 # 提交文件
 commit_files() {
     git commit -m "$commit_message"
-    git push
+    git push --set-upstream origin main
 }
 
 git add index.html
